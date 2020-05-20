@@ -10,6 +10,10 @@ import SwiftUI
 
 struct SwiftUIView: View {
     var it : item
+    @State var show = false
+  @State  var product = ""
+     @State var yourname = ""
+     @State var price = "0"
     @EnvironmentObject var env : Env
 @State var totall = 0
    
@@ -29,7 +33,7 @@ struct SwiftUIView: View {
                         .offset(x: -120, y:  0)
 
                     }
-                    PlusButton(total: $totall ,it: it).offset(x: 120, y:  0)
+                    PlusButton(total: $totall ,show: $show,it: it).offset(x: 120, y:  0)
                 }
             HStack{
         ScrollView(.horizontal){
@@ -42,7 +46,25 @@ struct SwiftUIView: View {
             }.padding()
         
                 }}}
-    }
+        if self.show{
+           
+
+                                      GeometryReader{ g in
+                                          Add(product: self.$product, yourname: self.$yourname, price: self.$price, it: self.it)
+                                      
+
+                                          }.frame(width: 300, height:100 )
+                                      .background(Color.white)
+            .cornerRadius(12)
+                                          .edgesIgnoringSafeArea(.all)
+                                          .onTapGesture {
+                                              
+                                              withAnimation{
+                                                  
+                                                  self.show.toggle()
+                                              }
+                                      }
+        }}
         
     }
     .frame(height:690)
@@ -68,6 +90,7 @@ struct Home: View {
     var it : item
     @EnvironmentObject var env : Env
     @Binding var totall : Int
+ 
 //    @Binding var product : [String]
 
     var body: some View {
@@ -138,6 +161,9 @@ struct PlusButton: View {
     @State var width: CGFloat = 60
     @State var tapped: Bool = false
     @Binding var total : Int
+   
+
+    @Binding var show : Bool
   var  it:item
     var body: some View {
      
@@ -153,12 +179,13 @@ struct PlusButton: View {
                     if tapped{
                         HStack(spacing:0){
                             Button(action: {
-                              //  Add(it:self.it)
+                             self.show.toggle()
                             })
                             {  Text("ADD")
                             .font(.custom("SignPainter", size: 30))
                             .foregroundColor(.black)
                                 .offset(x: 10)}
+                          
                                                 
                         Spacer()
                            
@@ -186,79 +213,27 @@ struct PlusButton: View {
 
 }
 struct Add : View {
-   @State  var product = ""
-    @State var yourname = ""
-    @State var price = "0"
+    @Binding  var product : String
+    @Binding var yourname : String
+    @Binding var price : String
     var it : item
     var body : some View{
         
-        VStack(alignment: .leading, spacing: 15) {
+        VStack( spacing: 50) {
             Button(action: {
-                self.it.Createe(name: self.product, price: Int(self.price)!, desc: self.yourname)
+                if self.product != "" && self.price != "0" && self.yourname != "" {
+                    self.it.Createe(name: self.product, price: Int(self.price)!, desc: self.yourname)}
             }){
-            TextField("Name of the product",text: $product)
+                VStack{
+                TextField("Name of the product",text: $product).foregroundColor(Color.black)
             
-             TextField("Name of the product",text: $yourname)
-             TextField("Name of the product",text: $price)
+             TextField("Name of the product",text: $yourname).foregroundColor(Color.black)
+                TextField("Name of the product",text: $price).foregroundColor(Color.black)
            
-            }
+                }}
             
             
         }
         }}
 
 
-/* Button(action:{
-self.total = self.total + self.it.price
-self.num = self.num + 1
-})
-{Image(systemName: "plus.circle.fill")
-.frame(width: 50, height: 50, alignment: .leading)
-.font(.system(size: 40))
-.foregroundColor(.gray)
-}
-Text(  "\(num)")
-.font(.system(size: 40))
-.fontWeight(.bold)
-Button(action:{
-if self.total > 0 {
-self.total = self.total - self.it.price
-self.num = self.num - 1}
-})
-{Image(systemName: "minus.circle.fill")
-.frame(width: 50, height: 50, alignment: .leading)
-.font(.system(size: 40))
-.foregroundColor(.gray)
-}*/
-
-/*  HStack(spacing:0){
-                          Image(systemName: "cart.fill.badge.plus")
-                              .font(.custom("Arial Rounded MT Bold", size: 40))
-                              .offset(x:10)
-                              
-                              .padding()
-                          Spacer()
-                          
-                          
-                          
-                          
-                          Text("\(self.it.price)KD")
-                              .font(.custom("SignPainter", size: 40))
-                              .fontWeight(.bold)
-                              .padding()
-                          
-                      }  .animation(Animation.easeInOut(duration: 0.6).delay(2))*/
-
-/* Image(it.name)
-     .resizable()
-     .frame(width: 500, height: 600)
-     .scaledToFill()
-     .edgesIgnoringSafeArea(.all)
-     .blur(radius: 20).edgesIgnoringSafeArea(.all)
- 
- Color.black.opacity(0.3).edgesIgnoringSafeArea(.all)*/
- /*   .resizable()
-  .scaledToFill()
-  .transition(AnyTransition.slide).animation(.default)
-  .frame(minWidth: nil, idealWidth: nil, maxWidth: UIScreen.main.bounds.width, minHeight: nil, idealHeight: nil, maxHeight: 300, alignment: .center)
-  .edgesIgnoringSafeArea(.all)*/
