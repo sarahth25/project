@@ -6,20 +6,21 @@
 //  Copyright © 2020 sarah alshammari. All rights reserved.
 //
 
-import SwiftUI
+/*import SwiftUI
 
 struct ContentView: View {
     /*var price = [5,2,3]
      var items = ["1","2","3"]*/
-    @State var total = 0
+   
     var it : item
     var body: some View {
         
         NavigationView{
             
             
-            
-            
+            ZStack{
+                Color.white
+                    .edgesIgnoringSafeArea(.all)
             
             ScrollView(.horizontal){
                 
@@ -49,18 +50,25 @@ struct ContentView: View {
                     
                     
                     
-                .navigationBarTitle("PAINTING")
+                .navigationBarTitle("PHOTOGRAPHY")
+                
+                
+                
+               
+
                 
                 
             }
             
-        }
+            }
+        }.accentColor(.white).offset(y:-20)
+
     }
     
     
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
-            ContentView(it: item(name: "1", price: 2,desc: "is an oil on canvas by Dutch post-impressionist painter Vincent van Gogh."))
+            ContentView(it: item(name: "1", price: 2,desc: "is an oil on canvas by Dutch post-impressionist painter Vincent van Gogh.", total: 0))
         }
     }
     
@@ -78,22 +86,28 @@ struct ContentView: View {
         var body: some View {
             
             VStack{
-                Image("\(it.name)")
+                Image("\(it.name)").renderingMode(.original)
                     .resizable()
                     .scaledToFill()
                     .frame(width:300,height: 300)
                     .cornerRadius(20)
                     .padding()
-                    .shadow(color: Color.black.opacity(0.1), radius: 20, x: 0, y: 0)
-                    .rotation3DEffect(.degrees(-5), axis: (x: 0, y: 2, z: 0))
+                    .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 0)
+                    .rotation3DEffect(.degrees(5), axis: (x: 0, y: -1, z: 0))
+                    
                 
                 VStack(spacing:10){
                     Text("\(it.name)")
-                        .font(.custom("Times New Roman", size: 35))
+                        .font(.custom("SignPainter", size: 50))
                         .font(.callout)
-                    
+                        .fontWeight(.heavy)
+                        .foregroundColor(.black)
+                     .transition(AnyTransition.slide).animation(.default)
                     Text("\(it.price)KD")
-                        .font(.custom("Times New Roman", size: 29))
+                        .font(.custom("SignPainter", size: 40))
+                       
+                        .fontWeight(.bold)
+                        .foregroundColor(.black)
                         .offset(x:-15)
                     
                     
@@ -163,3 +177,4 @@ struct ContentView: View {
  }
  }
  .navigationBarTitle("ITEMS")}*/
+*/
