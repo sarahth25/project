@@ -26,10 +26,10 @@ struct SwiftUIView: View {
                         .font(.system(size: 40))
                         .foregroundColor(.black)
                    
-                        .offset(x: -120, y:  -60)
+                        .offset(x: -120, y:  0)
 
                     }
-                    PlusButton(total: $totall ,it: it).offset(x: 120, y:  -60)
+                    PlusButton(total: $totall ,it: it).offset(x: 120, y:  0)
                 }
             HStack{
         ScrollView(.horizontal){
@@ -42,7 +42,11 @@ struct SwiftUIView: View {
             }.padding()
         
                 }}}
-        }}}
+    }
+        
+    }
+    .frame(height:690)
+    }
 }
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
@@ -121,11 +125,11 @@ struct Home: View {
                 .clipShape(Rounded())
                 
                // .padding(.top, -30)
-             //   .offset(y:-25)
+               .offset(y:-60)
             
             
             
-        }
+        } .frame(height:550)
     }
 }
 
