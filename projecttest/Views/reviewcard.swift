@@ -9,41 +9,41 @@
 import SwiftUI
 
 struct reviewcard: View {
-    var it : item
+   @State var it : item
+   
     @State var total: Int
+    @State var buttonn = true
+    @State var showing = false
     var body: some View {
         ZStack{
-            Color.init("Color")
-                .edgesIgnoringSafeArea(.all)
-            GeometryReader{ geo in
-                ScrollView{
-                    VStack(spacing:20){
-                        VStack{
-                            Color.white
-                        }
-                        
-                        Text("YOUR ORDER")
-                            .font(.custom("SignPainter", size: 40))
-                            .offset(y:-50)
-                        
+           
+               
+               
+            VStack(spacing:40){
+                    Text("YOUR ORDER")
+                        .font(.custom("SignPainter", size: 50)).offset(x:-70,y:40)
+
+                        List{
                         ForEach(items  , id: \.self){ i in
-                            listeditem(it:i
-                                
-                                
-                            )}.offset(y:-50)
-                        Text("Your Total : \(self.total) KD")
-                            .frame(width:139,height: 50).background(Color.init("Color")).cornerRadius(15).offset(x:80).font(.custom("SignPainter", size: 20))
+                            listeditem(it:i)}
+                            
+                        }.frame(height:400).offset(y:30)
+                    
                         
-                        Text("Place Order")
-                            .frame(width:200,height: 50).background(Color.init("Color")).cornerRadius(15).offset(x:80).font(.custom("SignPainter", size: 30)).offset(y:-10)
+                        VStack(spacing:50){
+                       Text("Your Total :\t\t\t\t\t\t\t\t \(total)")
+                        .foregroundColor(.black)
+                         .font(.custom("SignPainter", size: 30))
+                        //.frame(width: 2000, height: 60)
+                       /* .background(Color.init("Color"))
                         
-                    } .frame(width: 350, height: 600).offset(x:-80)
-                        
-                        
-                        .background(Color.white)
-                        .clipShape(Rounded())
-                }.frame(height:800).offset(y:50)
-            }}}}
+                        .clipShape(Capsule())*/
+                            checkout(total: $total, it: $it, buttonn: $buttonn)}
+                    }
+            
+        }.offset(y:-30)
+        
+    }}
 
 struct reviewcard_Previews: PreviewProvider {
     static var previews: some View {
@@ -75,11 +75,101 @@ struct listeditem: View {
                 }
                 Text("\(self.it.price) KD")
                     .font(.custom("SignPainter", size: 30))
-                //  .offset(x:-90)
+                 .offset(x:50)
                 
                 
-            } .frame(width:300,height: 90).background(Color.init("Color")).cornerRadius(15).offset(x:80)
+            } .frame(width:400,height: 90).cornerRadius(15).offset(x:-50)
             
         }
     }
 }
+
+
+struct checkout: View {
+    @Binding var total : Int
+    @Binding var it : item
+    @Binding var buttonn : Bool
+    @State var showing = false
+    var body: some View {
+        HStack{
+            if total > 0{
+                NavigationLink(destination: Checkout(total: total)){
+                    if buttonn{
+                        Text("Checkout")
+                            .foregroundColor(.black)
+                            .font(.custom("SignPainter", size: 40))
+                            .frame(width: 180, height: 60)
+                            .background(Color.init("Color"))
+                            .clipShape(Capsule())
+                    }else{
+                        Text("Checkout")
+                            .foregroundColor(.black)
+                            .font(.custom("SignPainter", size: 40))
+                            .frame(width: 180, height: 60)
+                            // .background(Color.init(bg))
+                            .overlay(Capsule().stroke(Color.init("Color"),lineWidth: 8))
+                            
+                            .clipShape(Capsule())
+                    }
+                }}
+            else{
+                Button(action:{
+                    self.showing.toggle()
+                     
+                                  
+                }){
+                Text("Checkout")
+                    .foregroundColor(.black)
+                    .font(.custom("SignPainter", size: 40))
+                    .frame(width: 180, height: 60)
+                    .background(Color.init("Color"))
+                    .clipShape(Capsule())}
+                 
+                    .alert(isPresented: $showing){
+                        
+                        Alert(title: Text("Your cart is empty you have to order"),dismissButton: .default(Text("Ok")))
+                }
+                
+                     
+                
+                         
+                  
+                  }
+
+          
+                
+                
+           
+            
+
+        Button(action: {
+                self.buttonn.toggle()
+            })
+            {
+                NavigationLink(destination: SwiftUIView(it:it)){
+                    if self.buttonn == true{
+                        Text("ADD Items")
+                            .foregroundColor(.black)
+                            .font(.custom("SignPainter", size: 40))
+                            .frame(width: 180, height: 60)
+                            //  .background(Color.init("Color"))
+                            .overlay(Capsule().stroke(Color.init("Color"),lineWidth: 8))
+                            .clipShape(Capsule())}
+                    else{
+                        Text("ADD Items")
+                            .foregroundColor(.black)
+                            .font(.custom("SignPainter", size: 40))
+                            .frame(width: 180, height: 60)
+                            .background(Color.init("Color"))
+                            
+                            .clipShape(Capsule())
+                    }
+                    
+                }}
+            
+            
+            
+        }.offset(y:-40)
+    }
+}
+

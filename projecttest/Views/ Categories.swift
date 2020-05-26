@@ -12,7 +12,7 @@ struct _Categories: View {
     var it : item
     var body: some View {
         NavigationView{
-            ScrollView{
+           
                 VStack(){
                     
                     
@@ -28,7 +28,9 @@ struct _Categories: View {
                     
                     
                 }
-            }}
+            
+          
+        }//.offset(y:10)
     }}
 
 struct _Categories_Previews: PreviewProvider {
@@ -43,13 +45,13 @@ struct text: View {
         Text("  What are you looking for ?")
             .fixedSize(horizontal: false, vertical: true)
             .font(.custom("SignPainter", size: 40))
-            // .padding()
+        
             .padding(.horizontal, 50)
             .padding(.vertical, 10)
             .background(Color.init("Color"))
             .clipShape(Capsule())
             .frame(width: 300, height:100)
-            .animation(Animation.easeInOut(duration: 0.6).delay(2))
+            .offset(y:-50)
     }
 }
 
@@ -63,8 +65,7 @@ struct image: View {
                 .background(Color.init("Color"))
                 .clipShape(Capsule())
                 .frame(width: 200, height:200)
-                // .animation(Animation.easeInOut(duration: 0.6).delay(2))
-                .transition(AnyTransition.slide).animation(.default)
+             .offset(y:-40)
             Image("camera").renderingMode(.original)
                 .resizable()
                 .padding(.horizontal, 30)
@@ -72,7 +73,7 @@ struct image: View {
                 .background(Color.init("Color"))
                 .clipShape(Capsule())
                 .frame(width: 200, height:200)
-                .animation(Animation.easeInOut(duration: 0.6).delay(2))
+               .offset(y:-40)
             
             
         }
